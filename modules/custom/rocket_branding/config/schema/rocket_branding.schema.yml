@@ -1,0 +1,7 @@
+block.settings.brand_logo:
+  type: block_settings
+  label: 'Brand logo block'
+  mapping:
+    inverse:
+      type: boolean
+      label: 'Inverse'

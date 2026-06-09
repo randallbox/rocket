@@ -43,7 +43,7 @@
  */
 #}
 {%
-set nav_classes = 'navbar navbar-expand-lg' ~
+set nav_classes = 'navbar navbar-expand-lg mb-4' ~
   (b5_navbar_schema != 'none' ? " navbar-#{b5_navbar_schema}" : ' ') ~
   (b5_navbar_schema != 'none' ? (b5_navbar_schema == 'dark' ? ' text-light' : ' text-dark' ) : ' ') ~
   (b5_navbar_bg_schema != 'none' ? " bg-#{b5_navbar_bg_schema}" : ' ')
@@ -121,10 +121,21 @@ set footer_classes = ' ' ~
 
 </main>
 
-{% if page.footer %}
 <footer role="contentinfo" class="mt-auto {{ footer_classes }}">
   <div class="{{ b5_top_container }}">
-    {{ page.footer }}
+    <div class="row">
+      <div class="col-lg-3 pb-4">
+        {{ page.footer }}
+      </div>
+      <div class="col-lg-3 pb-4">
+        {{ page.footer2 }}
+      </div>
+      <div class="col-lg-3 pb-4">
+        {{ page.footer3 }}
+      </div>
+      <div class="col-lg-3 pb-4">
+        {{ page.footer4 }}
+      </div>
+    </div>
   </div>
 </footer>
-{% endif %}

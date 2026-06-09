@@ -11162,5 +11162,12 @@ em.placeholder {
 code {
   overflow-y: auto; }
 
-main > * {
-  margin-bottom: 30px; }
+@media only screen and (min-width: 0px) and (max-width: 767px) {
+  .navbar-collapse {
+    position: absolute;
+    background: #fff;
+    left: -12px;
+    right: -12px;
+    top: 100%;
+    z-index: 9;
+    padding: 15px; } }

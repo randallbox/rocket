@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
-    - system
+    - rocket_branding
   theme:
     - rocket
 id: rocket_branding
@@ -10,13 +10,11 @@ theme: rocket
 region: nav_branding
 weight: -6
 provider: null
-plugin: system_branding_block
+plugin: brand_logo
 settings:
-  id: system_branding_block
-  label: 'Site branding'
-  provider: system
+  id: brand_logo
+  label: 'Brand logo'
+  provider: rocket_branding
   label_display: '0'
-  use_site_logo: true
-  use_site_name: true
-  use_site_slogan: false
+  inverse: false
 visibility: {  }

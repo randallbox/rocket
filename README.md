@@ -11,7 +11,8 @@ Rocket is a reusable Drupal starter recipe.
 - A Home banner View configured with Slick, a dedicated Slick optionset, and a block placed in the Rocket `banner` region on the front page.
 - Default Home banner content with placeholder images.
 - A reusable Contact webform and a `/get-in-touch` Basic page with a Layout Builder section containing the contact form.
-- Rocket theme templates and SCSS tweaks.
+- A Brand logo block from the bundled Rocket Branding module, with an `Inverse` option for rendering the Rocket primary or inverse logo.
+- Rocket theme templates and SCSS tweaks, including the banner region and four footer regions.
 - Safe defaults for CAPTCHA, Mail System, and Turnstile.
 
 Configure new Turnstile and SendGrid keys on each site after applying the recipe.
@@ -34,6 +35,8 @@ composer require randallbox/rocket:dev-main
 
 Once the repository has a tagged release, replace `dev-main` with the tag constraint, such as `^1.0`.
 
+Leave `randallbox/rocket` installed in Composer after applying the recipe so its Drupal package dependencies remain part of the site.
+
 ## Apply
 
 Install the new Drupal site with the Standard profile first, then apply Rocket.
@@ -48,13 +51,14 @@ php core/scripts/drupal recipe recipes/rocket
 
 For a recommended-project layout, run the pre-apply script from the project root or web root first, then run the recipe command from the web root and point to wherever Composer placed the recipe.
 
-The pre-apply script copies the bundled Rocket theme into `themes/custom/rocket`. This must happen before applying the recipe because Drupal needs to discover the theme before it can install it.
+The pre-apply script copies the bundled Rocket theme and Rocket Branding module into place. This must happen before applying the recipe because Drupal needs to discover them before it can install them.
 
 ## Scripts
 
-The pre-apply script performs the theme setup:
+The pre-apply script performs the theme and module setup:
 
 - copies the bundled Rocket theme to `themes/custom/rocket`
+- copies the bundled Rocket Branding module to `modules/custom/rocket_branding`
 - includes the `banner` region, page templates, compiled CSS, and SCSS source files
 
 The post-apply script performs the requested library steps:
