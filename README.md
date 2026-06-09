@@ -7,21 +7,29 @@ Rocket is a reusable Drupal starter recipe.
 - A starter layer intended for a fresh Drupal Standard installation.
 - Bootstrap 5 as the default theme.
 - Admin Toolbar, Pathauto, Slick/Slick Views, Focal Point, Image Effects, Views Bootstrap, Turnstile, Metatag, Schema Metatag, XML Sitemap, Redirect, Webform, and SendGrid Integration.
-- Reusable starter configuration exported from the current site, including Pathauto patterns, the `home_banner` content type, and the related responsive image/image style config.
+- Reusable starter configuration, including Pathauto patterns, the `home_banner` content type, and the related responsive image/image style config.
+- SCSS tweaks.
 - Safe defaults for CAPTCHA, Mail System, and Turnstile.
 
-Credential-bearing config was intentionally excluded. Configure new Turnstile and SendGrid keys on each site after applying the recipe.
+Configure new Turnstile and SendGrid keys on each site after applying the recipe.
 
 ## Composer
 
 For a local path repository:
 
 ```sh
-composer config repo.rocket path recipes/rocket
-composer require mover/rocket
+composer config repositories.rocket path recipes/rocket
+composer require randallbox/rocket:dev-main
 ```
 
-If the recipe is kept in its own Git repository, add that repository instead and require the same package name.
+For the GitHub repository:
+
+```sh
+composer config repositories.rocket vcs git@github.com:randallbox/rocket.git
+composer require randallbox/rocket:dev-main
+```
+
+Once the repository has a tagged release, replace `dev-main` with the tag constraint, such as `^1.0`.
 
 ## Apply
 

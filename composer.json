@@ -1,5 +1,5 @@
 {
-  "name": "mover/rocket",
+  "name": "randallbox/rocket",
   "description": "Rocket starter recipe for a fresh Drupal 11 site.",
   "type": "drupal-recipe",
   "license": "GPL-2.0-or-later",
