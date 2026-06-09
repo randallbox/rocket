@@ -1,0 +1,108 @@
+name: Rocket
+description: 'Installs the Rocket starter module set and reusable baseline configuration.'
+type: Site
+
+install:
+  - admin_toolbar
+  - admin_toolbar_tools
+  - bootstrap5
+  - captcha
+  - crop
+  - focal_point
+  - image_effects
+  - key
+  - mailsystem
+  - media
+  - metatag
+  - metatag_favicons
+  - metatag_open_graph
+  - pathauto
+  - redirect
+  - responsive_image
+  - schema_metatag
+  - schema_web_site
+  - sendgrid_integration
+  - slick
+  - slick_ui
+  - slick_views
+  - turnstile
+  - views_bootstrap
+  - webform
+  - webform_ui
+  - xmlsitemap
+
+config:
+  strict: false
+  import:
+    admin_toolbar: '*'
+    admin_toolbar_tools: '*'
+    blazy: '*'
+    bootstrap5: '*'
+    captcha: '*'
+    focal_point: '*'
+    image:
+      - image.style.max_1300x1300
+      - image.style.max_2600x2600
+      - image.style.max_325x325
+      - image.style.max_650x650
+      - image.style.wide
+    image_effects: '*'
+    mailsystem: '*'
+    metatag: '*'
+    pathauto: '*'
+    redirect:
+      - redirect.settings
+      - system.action.redirect_delete_action
+      - views.view.redirect
+    responsive_image:
+      - responsive_image.styles.narrow
+      - responsive_image.styles.wide
+    sendgrid_integration: '*'
+    slick: '*'
+    turnstile: '*'
+    webform: '*'
+    xmlsitemap:
+      - xmlsitemap.settings
+  actions:
+    system.theme:
+      simpleConfigUpdate:
+        admin: claro
+        default: bootstrap5
+    captcha.settings:
+      simpleConfigUpdate:
+        default_challenge: turnstile/Turnstile
+        wrong_captcha_response_message: 'Please try again.'
+    mailsystem.settings:
+      simpleConfigUpdate:
+        defaults:
+          sender: sendgrid_integration
+          formatter: sendgrid_integration
+        modules:
+          sendgrid_integration:
+            none:
+              sender: sendgrid_integration
+              formatter: sendgrid_integration
+    turnstile.settings:
+      simpleConfigUpdate:
+        widget:
+          theme: light
+          size: normal
+          tabindex: 0
+          language: auto
+          retry: auto
+          retry_interval: 8000
+          appearance: always
+    user.role.authenticated:
+      grantPermissions:
+        - 'access comments'
+        - 'access shortcuts'
+        - 'post comments'
+        - 'search content'
+        - 'skip comment approval'
+        - 'use text format basic_html'
+        - 'use text format webform_default'
+        - 'view media'
+    user.role.content_editor:
+      grantPermissions:
+        - 'access administration pages'
+        - 'view own unpublished content'
