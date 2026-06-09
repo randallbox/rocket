@@ -29,7 +29,6 @@ install:
   - path
   - redirect
   - responsive_image
-  - rocket_branding
   - rocket
   - schema_metatag
   - schema_web_site

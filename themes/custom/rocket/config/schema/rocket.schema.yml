@@ -38,10 +38,3 @@ rocket.settings:
     subtheme_machine_name:
       type: string
       label: 'Subtheme machine name'
-    inverse_logo:
-      type: mapping
-      label: 'Inverse logo'
-      mapping:
-        path:
-          type: string
-          label: 'Path'

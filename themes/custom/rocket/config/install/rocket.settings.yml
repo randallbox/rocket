@@ -7,5 +7,3 @@ b5_footer_bg_schema: secondary
 b5_top_container: container
 b5_top_container_config: ''
 b5_theme_mode: light
-inverse_logo:
-  path: themes/custom/rocket/logo_placeholder_inverse.png

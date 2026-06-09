@@ -11,7 +11,6 @@ Rocket is a reusable Drupal starter recipe.
 - A Home banner View configured with Slick, a dedicated Slick optionset, and a block placed in the Rocket `banner` region on the front page.
 - Default Home banner content with placeholder images.
 - A reusable Contact webform and a `/get-in-touch` Basic page with a Layout Builder section containing the contact form.
-- A Brand logo block from the bundled Rocket Branding module, with an `Inverse` option for rendering the Rocket primary or inverse logo.
 - Rocket theme templates and SCSS tweaks, including the banner region and four footer regions.
 - Safe defaults for CAPTCHA, Mail System, and Turnstile.
 
@@ -51,14 +50,13 @@ php core/scripts/drupal recipe recipes/rocket
 
 For a recommended-project layout, run the pre-apply script from the project root or web root first, then run the recipe command from the web root and point to wherever Composer placed the recipe.
 
-The pre-apply script copies the bundled Rocket theme and Rocket Branding module into place. This must happen before applying the recipe because Drupal needs to discover them before it can install them.
+The pre-apply script copies the bundled Rocket theme into place. This must happen before applying the recipe because Drupal needs to discover it before it can install it.
 
 ## Scripts
 
-The pre-apply script performs the theme and module setup:
+The pre-apply script performs the theme setup:
 
 - copies the bundled Rocket theme to `themes/custom/rocket`
-- copies the bundled Rocket Branding module to `modules/custom/rocket_branding`
 - includes the `banner` region, page templates, compiled CSS, and SCSS source files
 
 The post-apply script performs the requested library steps:

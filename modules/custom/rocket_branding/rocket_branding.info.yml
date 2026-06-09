@@ -1,5 +1,0 @@
-name: 'Rocket Branding'
-type: module
-description: 'Provides Rocket branding blocks and utilities.'
-package: Rocket
-core_version_requirement: '^10.1 || ^11.0'
