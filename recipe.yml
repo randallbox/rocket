@@ -1,24 +1,35 @@
 name: Rocket
-description: 'Installs the Rocket starter module set and reusable baseline configuration.'
+description: 'Installs the Rocket starter module set, theme, and reusable baseline configuration.'
 type: Site
 
 install:
   - admin_toolbar
   - admin_toolbar_tools
+  - block
   - bootstrap5
   - captcha
   - crop
+  - field
+  - file
+  - filter
   - focal_point
+  - image
   - image_effects
   - key
+  - layout_builder
+  - layout_discovery
   - mailsystem
   - media
+  - menu_ui
   - metatag
   - metatag_favicons
   - metatag_open_graph
+  - node
   - pathauto
+  - path
   - redirect
   - responsive_image
+  - rocket
   - schema_metatag
   - schema_web_site
   - sendgrid_integration
@@ -26,6 +37,8 @@ install:
   - slick_ui
   - slick_views
   - turnstile
+  - text
+  - views
   - views_bootstrap
   - webform
   - webform_ui
@@ -40,12 +53,6 @@ config:
     bootstrap5: '*'
     captcha: '*'
     focal_point: '*'
-    image:
-      - image.style.max_1300x1300
-      - image.style.max_2600x2600
-      - image.style.max_325x325
-      - image.style.max_650x650
-      - image.style.wide
     image_effects: '*'
     mailsystem: '*'
     metatag: '*'
@@ -54,9 +61,6 @@ config:
       - redirect.settings
       - system.action.redirect_delete_action
       - views.view.redirect
-    responsive_image:
-      - responsive_image.styles.narrow
-      - responsive_image.styles.wide
     sendgrid_integration: '*'
     slick: '*'
     turnstile: '*'
@@ -67,7 +71,7 @@ config:
     system.theme:
       simpleConfigUpdate:
         admin: claro
-        default: bootstrap5
+        default: rocket
     captcha.settings:
       simpleConfigUpdate:
         default_challenge: turnstile/Turnstile

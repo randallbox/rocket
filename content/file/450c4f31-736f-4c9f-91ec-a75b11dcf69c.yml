@@ -1,0 +1,24 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 450c4f31-736f-4c9f-91ec-a75b11dcf69c
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: banner_placeholder_0.png
+  uri:
+    -
+      value: 'public://2026-06/banner_placeholder_0.png'
+  filemime:
+    -
+      value: image/png
+  filesize:
+    -
+      value: 21976
+  status:
+    -
+      value: true

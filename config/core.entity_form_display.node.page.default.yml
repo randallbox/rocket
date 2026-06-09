@@ -2,22 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.home_banner.body
-    - field.field.node.home_banner.field_image
-    - image.style.home_banner_mobile
-    - node.type.home_banner
+    - field.field.node.page.body
+    - field.field.node.page.layout_builder__layout
+    - node.type.page
   module:
-    - focal_point
     - path
     - text
-id: node.home_banner.default
+id: node.page.default
 targetEntityType: node
-bundle: home_banner
+bundle: page
 mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 2
+    weight: 31
     region: content
     settings:
       rows: 9
@@ -27,36 +25,26 @@ content:
     third_party_settings: {  }
   created:
     type: datetime_timestamp
-    weight: 4
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_image:
-    type: image_focal_point
-    weight: 0
-    region: content
-    settings:
-      progress_indicator: throbber
-      preview_image_style: home_banner_mobile
-      preview_link: true
-      offsets: '50,50'
-    third_party_settings: {  }
   path:
     type: path
-    weight: 5
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 7
+    weight: 120
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 1
+    weight: -5
     region: content
     settings:
       size: 60
@@ -64,7 +52,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 3
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -73,10 +61,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 6
+    weight: 50
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  layout_builder__layout: true
   promote: true
   sticky: true

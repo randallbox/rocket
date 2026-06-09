@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.home_banner_desktop
+    - image.style.home_banner_mobile
+  theme:
+    - bootstrap5
+id: home_banner
+label: 'Home banner'
+image_style_mappings:
+  -
+    image_mapping_type: image_style
+    image_mapping: home_banner_desktop
+    breakpoint_id: bootstrap5.screen.xl-min
+    multiplier: 1x
+  -
+    image_mapping_type: image_style
+    image_mapping: home_banner_mobile
+    breakpoint_id: bootstrap5.screen.lg-max
+    multiplier: 1x
+breakpoint_group: bootstrap5.screen
+fallback_image_style: home_banner_desktop

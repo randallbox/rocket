@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: home_banner_desktop
+label: 'Home banner desktop'
+effects:
+  5dacb6d6-c620-4fcb-a0ae-b22b264f0f7e:
+    uuid: 5dacb6d6-c620-4fcb-a0ae-b22b264f0f7e
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1920
+      height: 700
+      crop_type: focal_point

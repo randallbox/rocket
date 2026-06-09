@@ -2,23 +2,32 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.home_banner.body
     - field.field.node.home_banner.field_image
-    - image.style.wide
     - node.type.home_banner
+    - responsive_image.styles.home_banner
   module:
-    - image
+    - responsive_image
+    - text
     - user
 id: node.home_banner.default
 targetEntityType: node
 bundle: home_banner
 mode: default
 content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_image:
-    type: image
+    type: responsive_image
     label: hidden
     settings:
+      responsive_image_style: home_banner
       image_link: ''
-      image_style: wide
       image_loading:
         attribute: eager
     third_party_settings: {  }

@@ -1,0 +1,46 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: d9be0790-0b8a-498b-808e-2a962cb0af52
+  bundle: home_banner
+  default_langcode: en
+  depends:
+    450c4f31-736f-4c9f-91ec-a75b11dcf69c: file
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Home banner 2'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      langcode: en
+      alias: null
+  body:
+    -
+      value: '<p>Welcome to this site.</p>'
+      format: basic_html
+      summary: ''
+  field_image:
+    -
+      alt: 'Banner 2'
+      title: ''
+      width: 1920
+      height: 700
+      entity: 450c4f31-736f-4c9f-91ec-a75b11dcf69c

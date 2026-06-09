@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: home_banner_mobile
+label: 'Home banner mobile'
+effects:
+  bbe21b3a-99e3-4cc7-97b4-e88989c332ea:
+    uuid: bbe21b3a-99e3-4cc7-97b4-e88989c332ea
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1280
+      height: 1280
+      crop_type: focal_point
