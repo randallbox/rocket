@@ -4,3 +4,220 @@
  * @file
  * Rocket theme file.
  */
+
+use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ */
+function rocket_form_system_theme_settings_alter(&$form, FormStateInterface $form_state): void {
+  if (isset($form['logo'])) {
+    $inverse_logo_path = (string) (theme_get_setting('inverse_logo_path') ?? '');
+    $inverse_logo_default = $inverse_logo_path;
+    if (StreamWrapperManager::getScheme($inverse_logo_path) === 'public') {
+      $inverse_logo_default = StreamWrapperManager::getTarget($inverse_logo_path);
+    }
+
+    $theme_path = \Drupal::service('extension.list.theme')->getPath('rocket');
+    $form['logo']['inverse_logo'] = [
+      '#type' => 'container',
+    ];
+    $form['logo']['inverse_logo']['inverse_logo_path'] = [
+      '#type' => 'textfield',
+      '#title' => t('Path to inverse logo'),
+      '#default_value' => $inverse_logo_default,
+      '#description' => t('Examples: <code>@implicit-public-file</code> (for a file in the public filesystem), <code>@explicit-file</code>, or <code>@local-file</code>.', [
+        '@implicit-public-file' => $inverse_logo_default ?: 'inverse-logo.svg',
+        '@explicit-file' => $inverse_logo_path && StreamWrapperManager::getScheme($inverse_logo_path) !== FALSE ? $inverse_logo_path : 'public://inverse-logo.svg',
+        '@local-file' => $theme_path . '/inverse-logo.svg',
+      ]),
+    ];
+    $form['logo']['inverse_logo']['inverse_logo_upload'] = [
+      '#type' => 'file',
+      '#title' => t('Upload inverse logo image'),
+      '#description' => t("If you don't have direct file access to the server, use this field to upload your inverse logo."),
+      '#upload_validators' => [
+        'FileExtension' => [
+          'extensions' => 'png gif jpg jpeg apng svg',
+        ],
+      ],
+    ];
+  }
+
+  $form['attribution'] = [
+    '#type' => 'details',
+    '#title' => t('Attribution'),
+    '#open' => TRUE,
+  ];
+  $attribution_text = rocket_get_attribution_text_setting();
+  $form['attribution']['attribution_text'] = [
+    '#type' => 'text_format',
+    '#title' => t('Attribution text'),
+    '#default_value' => $attribution_text['value'],
+    '#format' => $attribution_text['format'],
+    '#rows' => 3,
+  ];
+
+  $form['#validate'][] = 'rocket_form_system_theme_settings_validate';
+  $form['#submit'][] = 'rocket_form_system_theme_settings_submit';
+}
+
+/**
+ * Validation callback for Rocket theme settings.
+ */
+function rocket_form_system_theme_settings_validate(array &$form, FormStateInterface $form_state): void {
+  if (isset($form['logo']['inverse_logo']['inverse_logo_upload'])) {
+    $file = _file_save_upload_from_form($form['logo']['inverse_logo']['inverse_logo_upload'], $form_state, 0);
+    if ($file) {
+      $form_state->setTemporaryValue('rocket_inverse_logo_upload', $file);
+    }
+  }
+
+  $inverse_logo_path = trim((string) $form_state->getValue('inverse_logo_path'));
+  if ($inverse_logo_path === '') {
+    return;
+  }
+
+  $valid_path = rocket_validate_theme_file_path($inverse_logo_path);
+  if (!$valid_path) {
+    $form_state->setErrorByName('inverse_logo_path', t('The inverse logo path is invalid.'));
+    return;
+  }
+
+  $form_state->setValue('inverse_logo_path', $valid_path);
+}
+
+/**
+ * Submit callback for Rocket theme settings.
+ */
+function rocket_form_system_theme_settings_submit(array &$form, FormStateInterface $form_state): void {
+  $inverse_logo_path = trim((string) $form_state->getValue('inverse_logo_path'));
+  $inverse_logo_upload = $form_state->getTemporaryValue('rocket_inverse_logo_upload');
+
+  if ($inverse_logo_upload) {
+    $default_scheme = \Drupal::config('system.file')->get('default_scheme') ?: 'public';
+    try {
+      $inverse_logo_path = \Drupal::service('file_system')
+        ->copy($inverse_logo_upload->getFileUri(), $default_scheme . '://');
+      $form_state->setValue('inverse_logo_path', $inverse_logo_path);
+    }
+    catch (FileException) {
+      // Ignore failed copies; the existing path value will be preserved.
+    }
+  }
+
+  \Drupal::configFactory()
+    ->getEditable('rocket.settings')
+    ->set('inverse_logo_path', $inverse_logo_path)
+    ->set('attribution_text', rocket_normalize_attribution_text_value($form_state->getValue('attribution_text')))
+    ->save();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page templates.
+ */
+function rocket_preprocess_page(array &$variables): void {
+  $inverse_logo_path = (string) (theme_get_setting('inverse_logo_path') ?? '');
+  $variables['rocket_inverse_logo_path'] = $inverse_logo_path;
+  $variables['rocket_inverse_logo'] = [];
+  $variables['rocket_inverse_logo_url'] = '';
+  $attribution_text = rocket_get_attribution_text_setting();
+  $variables['rocket_attribution_text'] = [];
+  $variables['rocket_attribution_text_raw'] = $attribution_text['value'];
+  $variables['rocket_attribution_text_format'] = $attribution_text['format'];
+
+  if ($inverse_logo_path !== '') {
+    $variables['rocket_inverse_logo_url'] = \Drupal::service('file_url_generator')
+      ->generateString($inverse_logo_path);
+    $variables['rocket_inverse_logo'] = [
+      '#theme' => 'image',
+      '#uri' => $inverse_logo_path,
+      '#alt' => \Drupal::config('system.site')->get('name') ?? '',
+      '#attributes' => [
+        'class' => [
+          'img-fluid',
+          'rocket-inverse-logo',
+        ],
+      ],
+    ];
+  }
+
+  if ($attribution_text['value'] !== '') {
+    $variables['rocket_attribution_text'] = [
+      '#type' => 'processed_text',
+      '#text' => $attribution_text['value'],
+      '#format' => $attribution_text['format'],
+    ];
+  }
+
+  $variables['#cache']['tags'][] = 'config:rocket.settings';
+}
+
+/**
+ * Gets the attribution text setting with support for older string values.
+ */
+function rocket_get_attribution_text_setting(): array {
+  return rocket_normalize_attribution_text_value(theme_get_setting('attribution_text'));
+}
+
+/**
+ * Normalizes the attribution text setting into text_format storage shape.
+ */
+function rocket_normalize_attribution_text_value(mixed $value): array {
+  if (is_array($value)) {
+    return [
+      'value' => (string) ($value['value'] ?? ''),
+      'format' => (string) ($value['format'] ?? rocket_default_attribution_text_format()),
+    ];
+  }
+
+  return [
+    'value' => (string) ($value ?? ''),
+    'format' => rocket_default_attribution_text_format(),
+  ];
+}
+
+/**
+ * Gets the preferred default text format for attribution text.
+ */
+function rocket_default_attribution_text_format(): string {
+  if (\Drupal::moduleHandler()->moduleExists('filter')) {
+    $format_storage = \Drupal::entityTypeManager()->getStorage('filter_format');
+    if ($format_storage->load('basic_html')) {
+      return 'basic_html';
+    }
+
+    if (function_exists('filter_default_format')) {
+      return filter_default_format();
+    }
+  }
+
+  return 'plain_text';
+}
+
+/**
+ * Validates a theme file path using the same rules as core logo settings.
+ */
+function rocket_validate_theme_file_path(string $path): string|false {
+  $file_system = \Drupal::service('file_system');
+
+  if ($file_system->realpath($path) === $path) {
+    return FALSE;
+  }
+
+  if (is_file($path)) {
+    return $path;
+  }
+
+  if (StreamWrapperManager::getScheme($path) === FALSE) {
+    $path = 'public://' . $path;
+  }
+
+  if (is_file($path)) {
+    return $path;
+  }
+
+  return FALSE;
+}

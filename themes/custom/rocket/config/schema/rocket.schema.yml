@@ -29,6 +29,12 @@ rocket.settings:
     b5_theme_mode:
       type: string
       label: 'Theme mode'
+    inverse_logo_path:
+      type: string
+      label: 'Inverse logo path'
+    attribution_text:
+      type: text_format
+      label: 'Attribution text'
     subtheme_folder:
       type: string
       label: 'Subtheme folder'
