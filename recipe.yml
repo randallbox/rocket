@@ -20,6 +20,7 @@ install:
   - layout_discovery
   - mailsystem
   - media
+  - menu_link_content
   - menu_ui
   - metatag
   - metatag_favicons
@@ -77,6 +78,58 @@ config:
       simpleConfigUpdate:
         default_challenge: turnstile/Turnstile
         wrong_captcha_response_message: 'Please try again.'
+    core.entity_view_display.node.page.default:
+      enableLayoutBuilder: []
+      allowLayoutOverrides: true
+      setProperties:
+        third_party_settings.layout_builder.sections:
+          -
+            layout_id: layout_onecol
+            layout_settings:
+              label: ''
+            components:
+              665ca6e5-f169-4dc8-a9ae-2622e2cc77f9:
+                uuid: 665ca6e5-f169-4dc8-a9ae-2622e2cc77f9
+                region: content
+                configuration:
+                  id: 'field_block:node:page:body'
+                  label_display: '0'
+                  context_mapping:
+                    entity: layout_builder.entity
+                  formatter:
+                    type: text_default
+                    label: hidden
+                    settings: {  }
+                    third_party_settings: {  }
+                weight: 0
+                additional: {  }
+              64577024-9215-41e7-b675-d8c0e6f6c139:
+                uuid: 64577024-9215-41e7-b675-d8c0e6f6c139
+                region: content
+                configuration:
+                  id: 'extra_field_block:node:page:links'
+                  label_display: '0'
+                  context_mapping:
+                    entity: layout_builder.entity
+                weight: 1
+                additional: {  }
+            third_party_settings: {  }
+        content: {  }
+        hidden.layout_builder__layout: true
+        hidden.body: true
+        hidden.links: true
+    node.type.page:
+      setThirdPartySettings:
+        -
+          module: menu_ui
+          key: available_menus
+          value:
+            - footer
+            - main
+        -
+          module: menu_ui
+          key: parent
+          value: 'footer:'
     mailsystem.settings:
       simpleConfigUpdate:
         defaults:

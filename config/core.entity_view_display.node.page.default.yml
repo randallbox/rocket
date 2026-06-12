@@ -50,5 +50,6 @@ bundle: page
 mode: default
 content: {  }
 hidden:
+  layout_builder__layout: true
   body: true
   links: true
