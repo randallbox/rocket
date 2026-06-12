@@ -9,7 +9,7 @@ dependencies:
     - rocket
 id: rocket_footer
 theme: rocket
-region: footer
+region: footer2
 weight: -6
 provider: null
 plugin: 'system_menu_block:footer'
