@@ -18,17 +18,10 @@ Configure new Turnstile and SendGrid keys on each site after applying the recipe
 
 ## Composer
 
-For a local path repository:
+Use the local recipe checkout at `recipes/rocket`:
 
 ```sh
 composer config repositories.rocket path recipes/rocket
-composer require randallbox/rocket:dev-main
-```
-
-For the GitHub repository:
-
-```sh
-composer config repositories.rocket vcs git@github.com:randallbox/rocket.git
 composer require randallbox/rocket:dev-main
 ```
 

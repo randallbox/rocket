@@ -50,7 +50,8 @@ config:
     admin_toolbar: '*'
     admin_toolbar_tools: '*'
     blazy: '*'
-    bootstrap5: '*'
+    bootstrap5:
+      - bootstrap5.settings
     captcha: '*'
     focal_point: '*'
     image_effects: '*'

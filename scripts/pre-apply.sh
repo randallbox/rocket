@@ -16,10 +16,17 @@ fi
 
 theme_source="${recipe_dir}/themes/custom/rocket"
 theme_target="${root}/themes/custom/rocket"
+bootstrap5_optional_config="${root}/themes/contrib/bootstrap5/config/optional"
 
 if [[ ! -d "${theme_source}" ]]; then
   echo "Could not find bundled Rocket theme at ${theme_source}." >&2
   exit 1
+fi
+
+if [[ -d "${bootstrap5_optional_config}" ]]; then
+  while IFS= read -r -d '' file; do
+    sed -i 's/^  depth: 0$/  depth: 8/' "${file}"
+  done < <(find "${bootstrap5_optional_config}" -name 'block.block.bootstrap5_*.yml' -print0)
 fi
 
 mkdir -p "${theme_target}"
