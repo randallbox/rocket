@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.node.home_banner.body
     - field.field.node.home_banner.field_image
-    - image.style.home_banner_mobile
+    - image.style.thumbnail
     - node.type.home_banner
   module:
     - focal_point
@@ -37,7 +37,7 @@ content:
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: home_banner_mobile
+      preview_image_style: thumbnail
       preview_link: true
       offsets: '50,50'
     third_party_settings: {  }
